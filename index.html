@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swiggy Registration</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .container {
+      background: rgba(255,255,255,0.95);
+      padding: 20px 25px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      animation: slideUp 1.2s ease;
+    }
+
+    @keyframes slideUp {
+      from {transform: translateY(50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #ff6600;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 3px;
+      font-weight: bold;
+      font-size: 12px;
+      color: #333;
+    }
+
+    input, select {
+      width: 320px;
+      padding: 7px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    input:focus, select:focus {
+      border-color: #ff6600;
+      outline: none;
+      box-shadow: 0 0 4px rgba(255,102,0,0.6);
+    }
+
+    .error {
+      font-size: 10px;
+      color: red;
+      min-height: 12px;
+      margin: 2px 0 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 9px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #ff6600;
+      color: white;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover {
+      background: #e65c00;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Swiggy Registration</h2>
+    <form id="swiggyForm">
+      <label>Username</label>
+      <input type="text" id="username">
+      <div class="error" id="userErr"></div>
+
+      <label>Email</label>
+      <input type="text" id="email">
+      <div class="error" id="emailErr"></div>
+
+      <label>Password</label>
+      <input type="password" id="password">
+      <div class="error" id="passErr"></div>
+
+      <label>Confirm Password</label>
+      <input type="password" id="confirm">
+      <div class="error" id="confirmErr"></div>
+
+      <label>Age</label>
+      <input type="number" id="age">
+      <div class="error" id="ageErr"></div>
+
+      <label>Gender</label>
+      <select id="gender">
+        <option value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <div class="error" id="genderErr"></div>
+
+      <label>Date of Birth</label>
+      <input type="date" id="dob">
+      <div class="error" id="dobErr"></div>
+
+      <label>Location</label>
+      <select id="location">
+        <option value="">Select District</option>
+        <option>Chennai</option>
+        <option>Coimbatore</option>
+        <option>Madurai</option>
+        <option>Tiruchirappalli</option>
+        <option>Salem</option>
+        <option>Erode</option>
+        <option>Tirunelveli</option>
+        <option>Tiruppur</option>
+        <option>Thoothukudi</option>
+        <option>Vellore</option>
+        <option>Thanjavur</option>
+        <option>Dindigul</option>
+        <option>Krishnagiri</option>
+        <option>Kanchipuram</option>
+        <option>Nagapattinam</option>
+        <option>Karur</option>
+        <option>Cuddalore</option>
+        <option>Villupuram</option>
+        <option>Nilgiris</option>
+        <option>Dharmapuri</option>
+        <option>Ariyalur</option>
+        <option>Ramanathapuram</option>
+        <option>Sivagangai</option>
+        <option>Pudukkottai</option>
+        <option>Virudhunagar</option>
+        <option>Perambalur</option>
+        <option>Tenkasi</option>
+        <option>Kallakurichi</option>
+      </select>
+      <div class="error" id="locErr"></div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("swiggyForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let username = document.getElementById("username").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let pass = document.getElementById("password").value;
+      let confirm = document.getElementById("confirm").value;
+      let age = parseInt(document.getElementById("age").value.trim());
+      let gender = document.getElementById("gender").value;
+      let dob = document.getElementById("dob").value;
+      let location = document.getElementById("location").value;
+
+      let errors = [];
+
+      // reset errors
+      document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+      if (!username) { document.getElementById("userErr").textContent = "Username required"; errors.push("Username"); }
+      if (!email || !email.includes("@")) { document.getElementById("emailErr").textContent = "Valid email required"; errors.push("Email"); }
+      if (!/^(?=.*[A-Z])(?=.*[0-9]).{8,}$/.test(pass)) { document.getElementById("passErr").textContent = "Min 8 chars, 1 uppercase, 1 number"; errors.push("Password"); }
+      if (pass !== confirm) { document.getElementById("confirmErr").textContent = "Passwords do not match"; errors.push("Confirm Password"); }
+      if (!age || age < 18) { document.getElementById("ageErr").textContent = "Age must be 18+"; errors.push("Age"); }
+      if (!gender) { document.getElementById("genderErr").textContent = "Select gender"; errors.push("Gender"); }
+      if (!dob) { document.getElementById("dobErr").textContent = "Select DOB"; errors.push("DOB"); }
+      if (!location) { document.getElementById("locErr").textContent = "Select location"; errors.push("Location"); }
+
+      // Extra validation: Age vs DOB
+      if (dob) {
+        let birthDate = new Date(dob);
+        let today = new Date();
+        let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+        let m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          calculatedAge--;
+        }
+
+        if (calculatedAge !== age) {
+          document.getElementById("dobErr").textContent = "DOB does not match entered Age";
+          errors.push("DOB-Age mismatch");
+        }
+      }
+
+      if (errors.length > 0) {
+        alert("⚠️ Please check: " + errors.join(", "));
+        return;
+      }
+
+      alert("🎉 Registration successful! Welcome to Swiggy.");
+    });
+  </script>
+</body>
+</html>
